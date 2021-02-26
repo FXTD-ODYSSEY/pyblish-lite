@@ -1088,11 +1088,11 @@ class TerminalModel(QtGui.QStandardItemModel):
         if error:
             fname, line_no, func, exc = error.traceback
             error_item = {
-                "label": str(error),
+                "label": "%s" % (error),
                 "type": "error",
-                "filename": str(fname),
-                "lineno": str(line_no),
-                "func": str(func),
+                "filename": "%s" % (fname),
+                "lineno": "%s" % (line_no),
+                "func": "%s" % (func),
                 "traceback": error.formatted_traceback,
             }
 
