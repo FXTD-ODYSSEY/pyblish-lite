@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
@@ -101,10 +102,10 @@ class OrderGroups:
 
     # Group string can be set with environment "PYBLISH_GROUP_SETTING"
     default_groups = {
-        pyblish.api.CollectorOrder + 0.5: "Collect",
-        pyblish.api.ValidatorOrder + 0.5: "Validate",
-        pyblish.api.ExtractorOrder + 0.5: "Extract",
-        pyblish.api.IntegratorOrder + 0.5: "Integrate",
+        pyblish.api.CollectorOrder + 0.5: "收集 Collect",
+        pyblish.api.ValidatorOrder + 0.5: "校验 Validate",
+        pyblish.api.ExtractorOrder + 0.5: "提取 Extract",
+        pyblish.api.IntegratorOrder + 0.5: "整合 Integrate",
         None: "Other"
     }
 
