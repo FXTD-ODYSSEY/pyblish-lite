@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
 """The Controller in a Model/View/Controller-based application
 The graphical components of Pyblish Lite use this object to perform
 publishing. It communicates via the Qt Signals/Slots mechanism
@@ -226,7 +231,7 @@ class Controller(QtCore.QObject):
 
         except Exception as exc:
             raise Exception("Unknown error({}): {}".format(
-                plugin.__name__, str(exc)
+                plugin.__name__, "%s" % (exc)
             ))
 
         return result

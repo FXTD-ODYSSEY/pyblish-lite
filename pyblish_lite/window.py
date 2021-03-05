@@ -1026,11 +1026,11 @@ class Window(QtWidgets.QDialog):
             fname, line_no, func, exc = error.traceback
 
             records.append({
-                "label": str(error),
+                "label": u"%s" % (error),
                 "type": "error",
-                "filename": str(fname),
-                "lineno": str(line_no),
-                "func": str(func),
+                "filename": u"%s" % (fname),
+                "lineno": u"%s" % (line_no),
+                "func": u"%s" % (func),
                 "traceback": error.formatted_traceback
             })
 
@@ -1133,6 +1133,8 @@ class Window(QtWidgets.QDialog):
 
         # TODO(marcus): Should this be configurable? Do we want
         # the shell to fill up with these messages?
+        if QtCore.QLocale.system().name() == "zh_CN":
+            message = message.encode("gbk")
         util.u_print(message)
 
     def warning(self, message):

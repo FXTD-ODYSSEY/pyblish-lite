@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+
+"""
+
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
 import sys
 from .vendor.Qt import QtCore, QtWidgets, QtGui
 from . import model, delegate, view, awesome
@@ -55,9 +64,9 @@ class PerspectiveLabel(QtWidgets.QTextEdit):
 
 
 class PerspectiveWidget(QtWidgets.QWidget):
-    l_doc = "Documentation"
-    l_rec = "Records"
-    l_path = "Path"
+    l_doc = "说明信息"
+    l_rec = "记录"
+    l_path = "运行路径"
 
     def __init__(self, parent):
         super(PerspectiveWidget, self).__init__(parent)
