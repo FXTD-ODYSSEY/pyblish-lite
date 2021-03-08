@@ -1158,7 +1158,7 @@ class TerminalModel(QtGui.QStandardItemModel):
                 continue
             value = item_data[key]
             text = (
-                u"%s" % (value)
+                (u"%s" % value)
                 .replace("<", "&#60;")
                 .replace(">", "&#62;")
                 .replace('\n', '<br/>')
