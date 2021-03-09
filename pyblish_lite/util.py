@@ -9,7 +9,7 @@ import copy
 import collections
 
 from .vendor.Qt import QtCore
-from .vendor.six import text_type
+from .vendor.six import text_type,PY2
 import pyblish.api
 
 root = os.path.dirname(__file__)
@@ -63,7 +63,7 @@ def u_print(msg, **kwargs):
         **kwargs: Keyword argument for `print` function.
     """
 
-    if isinstance(msg, text_type):
+    if isinstance(msg, text_type) and PY2:
         encoding = None
         try:
             encoding = os.getenv('PYTHONIOENCODING', sys.stdout.encoding)
