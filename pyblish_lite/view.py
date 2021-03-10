@@ -48,7 +48,7 @@ class ArtistView(QtWidgets.QListView):
     def mouseReleaseEvent(self, event):
         if event.button() == QtCore.Qt.LeftButton:
             indexes = self.selectionModel().selectedIndexes()
-            if len(indexes) <= 1 and event.pos().x() < 20:
+            if len(indexes) <= 1 and event.pos().x() < self.width()-40:
                 for index in indexes:
                     self.toggled.emit(index, None)
             if len(indexes) == 1 and event.pos().x() > self.width()-40:
