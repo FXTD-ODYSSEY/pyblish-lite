@@ -298,18 +298,23 @@ class Window(QtWidgets.QDialog):
         footer_info = QtWidgets.QLabel(footer_widget)
         footer_spacer = QtWidgets.QWidget(footer_widget)
         footer_button_reset = QtWidgets.QPushButton(
-            awesome["refresh"], footer_widget
+            awesome["refresh"] + u"刷新", footer_widget
         )
         footer_button_validate = QtWidgets.QPushButton(
-            awesome["flask"], footer_widget
+            awesome["flask"] + u"检查", footer_widget
         )
         footer_button_play = QtWidgets.QPushButton(
-            awesome["play"], footer_widget
+            awesome["play"] + u"上传", footer_widget
         )
         footer_button_stop = QtWidgets.QPushButton(
-            awesome["stop"], footer_widget
+            awesome["stop"] + u"终止", footer_widget
         )
 
+        footer_button_reset.setMinimumWidth(55)
+        footer_button_validate.setMinimumWidth(55)
+        footer_button_play.setMinimumWidth(55)
+        footer_button_stop.setMinimumWidth(55)
+        
         layout = QtWidgets.QHBoxLayout()
         layout.setContentsMargins(5, 5, 5, 5)
         layout.addWidget(footer_info, 0)
