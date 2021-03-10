@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
+from __future__ import unicode_literals
+
 """Qt models
 
 Description:
@@ -23,13 +29,14 @@ Roles:
     as the key of a dictionary, except they can only be integers.
 
 """
-from __future__ import unicode_literals
 
 import pyblish
+import base64
 
 from . import settings, util
 from .awesome import tags as awesome
 from .vendor import Qt
+from .vendor import six
 from .vendor.Qt import QtCore, QtGui
 from .vendor.six import text_type
 from .vendor.six.moves import queue
@@ -1149,10 +1156,12 @@ class TerminalModel(QtGui.QStandardItemModel):
             self.append(record)
 
     def prepare_detail_text(self, item_data):
+        label = item_data["label"]
         if item_data["type"] == "info":
-            return item_data["label"]
-
+            return label
+        
         html_text = ""
+        error_info = "%s\n" % label
         for key, title in self.key_label_record_map:
             if key not in item_data:
                 continue
@@ -1179,6 +1188,33 @@ class TerminalModel(QtGui.QStandardItemModel):
         html_text = '<table width="100%" cellspacing="3">{}</table>'.format(
             html_text
         )
+        
+        # NOTE 添加错误提示信息
+        title_tag = (
+            '<span style=\" font-size:8pt; font-weight:600;'
+            # ' background-color:#bbb; color:#333;\" >{}:</span> '
+            ' color:#19a2ff;\" >{}:</span> '
+        ).format(u"错误提示信息")
+        
+        error_info = (
+            '<tr><td width="100%" align=left>{}</td></tr>'
+            '<tr><td width="100%"><b>{}</b></td></tr>'
+            '<hr>'
+        ).format(title_tag, (error_info.strip()
+                 .replace("<", "&#60;")
+                .replace(">", "&#62;")
+                .replace('\n', '<br/>')
+                .replace(' ', '&nbsp;')))
+        
+        style = "font-size:8pt; font-weight:600;color:orange;cursor:pointer"
+        
+        url_info = base64.b64encode(html_text.encode("utf-8"))
+        url_info = str(url_info,"utf-8") if six.PY3 else url_info
+        collapse_link = (
+            '<a href="{}" style="{}">▶{}</a>'
+        ).format(url_info,style,u"调试信息")
+        
+        html_text = error_info + collapse_link 
         return html_text
 
 

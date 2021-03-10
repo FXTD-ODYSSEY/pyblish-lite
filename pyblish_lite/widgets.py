@@ -4,7 +4,9 @@
 """
 
 import sys
+import base64
 from .vendor.Qt import QtCore, QtWidgets, QtGui
+from .vendor import six
 from . import model, delegate, view, awesome
 from .constants import PluginStates, InstanceStates, Roles
 
@@ -492,7 +494,8 @@ class CommentBox(QtWidgets.QLineEdit):
 class TerminalDetail(QtWidgets.QTextEdit):
     def __init__(self, text, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
-
+        self.toggle_debug = False
+        self.original_text = text
         self.setReadOnly(True)
         self.setHtml(text)
         self.setTextInteractionFlags(QtCore.Qt.TextBrowserInteraction)
@@ -500,6 +503,26 @@ class TerminalDetail(QtWidgets.QTextEdit):
             QtGui.QTextOption.WrapAtWordBoundaryOrAnywhere
         )
 
+    def mousePressEvent(self, e):
+        self.anchor = self.anchorAt(e.pos())
+        if self.anchor:
+            QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.PointingHandCursor)
+    
+    def mouseReleaseEvent(self, e):
+        QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.ArrowCursor)
+        if self.anchor:
+            self.toggle_debug = not self.toggle_debug
+            if self.toggle_debug:
+                info = base64.b64decode(self.anchor).decode("utf-8")
+                self.setHtml(self.original_text.replace(u"▶",u"▼") + info)
+            else:
+                self.setHtml(self.original_text)
+            self.adjustSize()
+            
+            # TODO 清理奇怪的文字残留  | 只有触发横向 resize 能清除
+            window  = self.window()
+            window.resize(window.width()+1,window.height())
+            
     def sizeHint(self):
         content_margins = (
             self.contentsMargins().top()
